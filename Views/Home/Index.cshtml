@@ -1,0 +1,25 @@
+﻿@model PollutionQA.Models.IndexViewModel
+
+@{ ViewBag.Title = "Home Page"; }
+
+<div class="text-center">
+    <h1 class="display-4">Welcome to PollutionQA</h1>
+    <p>You are accesing to the Quality Assurance Query System.</p>
+</div>
+ <div class="row">
+        <div class="col-sm-4 col-sm-offset-4 mx-auto">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    @using (Html.BeginForm()) {
+                        @* State selection dropdown *@
+                        <div class="form-group">
+                            <!--@Html.LabelFor(m => m.SelectedStrategyId)-->
+                            @Html.DropDownListFor(m => m.SelectedStrategyId, Model.Strategies,"- Please select a QA System -",new { @class = "form-control" })
+                        </div>
+                        <button type="submit" class="btn btn-primary">Start query</button>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+ 

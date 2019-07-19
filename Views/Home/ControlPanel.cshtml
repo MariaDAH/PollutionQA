@@ -1,0 +1,102 @@
+@model PollutionQA.Models.SelectQueryDetailsViewModel
+@{
+    ViewBag.Title = "ControlPanel";
+}
+<div class="row">
+    <div class="col-sm-4 col-sm-offset-4">
+        <h1>@Model.Title</h1>
+        <div class="panel panel-default">
+            <div class="panel-body">
+                @using (Html.BeginForm("ControlPanel", "Home", FormMethod.Post, new { @name = "QueryForm" }))
+                {
+                    <fieldset>
+                        <legend>Query Details</legend>
+                        @* State selection dropdown *@
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.Country)
+                            @Html.DropDownListFor(m => m.Country,
+                                                Model.Countries, 
+                                                "- Please select a country -",
+                                                new { onchange = "document.forms[0].submit();" , @class="form-control" })
+                        </div>
+                        @* State selection dropdown *@
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.City)
+                            @Html.DropDownListFor(m => m.City,
+                                                Model.Cities, 
+                                                "- Please select a city -",
+                                                new { onchange = "document.forms[0].submit();", disabled = "disabled", @class="form-control" })
+                        </div>
+                        @* State selection dropdown *@
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.Parameter)
+                            @Html.DropDownListFor(m => m.Parameter,
+                                                Model.Parameters, 
+                                                "- Please select a parameter -",
+                                                new { disabled = "disabled" , @class="form-control" })
+                        </div>
+                        <button type="submit" class="btn btn-primary">Launch Query</button>
+                    </fieldset>
+                }
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-8 col-sm-offset-4">
+        <h1>Results</h1>
+        <div class="panel panel-default">
+            <div class="panel-body">
+               <div class="table-responsive">  
+                <table class="table table-bordered table-condensed table-striped table-hover sortable">  
+                    @if (Model.QueryResults.Count() == 0)  
+                        {  
+                        <tr>  
+                            <td colspan="10">No Record's found.</td>  
+                        </tr>  
+                    }  
+                    else  
+                    {  
+                        <thead>  
+                            <tr class="danger">  
+                                <th data-defaultsign="AZ"> City</th>  
+                                <th data-defaultsign="AZ">Location</th>  
+                                <th data-defaultsign="AZ">Parameter</th>  
+                                <th data-defaultsign="_19">Value</th>  
+                                <th data-firstsort="AZ">Unit</th>  
+                            </tr>  
+                        </thead>  
+                        foreach (var item in Model.QueryResults)  
+                        {  
+                            <tr>  
+                                <td class="nowrap">@item.City</td>  
+                                <td>@item.Location</td>  
+                                <td>@item.Parameter</td>  
+                                <td>@item.Value</td>  
+                                <td>@item.Unit</td>    
+                            </tr>  
+                        }  
+                    }  
+                </table>  
+                </div>  
+            </div>
+        </div>
+    </div>
+    <script src="../lib/jquery/dist/jquery.min.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            if ($("#Parameter option").length > 1) {
+                $("#Parameter").removeAttr("disabled");
+            }
+ 
+            if ($("#City option").length > 1) {
+                $("#City").removeAttr("disabled");
+            }
+ 
+            if ($("#Country").val() != "" && $("#City").val() != "" && $("#Parameter").val() != "") {
+                var message = "Country: " + $("#Country option:selected").text();
+                message += "\nCity: " + $("#City option:selected").text();
+                message += "\nParameter: " + $("#Parameter option:selected").text();
+                alert(message);
+            }
+        });
+    </script>
+</div>
