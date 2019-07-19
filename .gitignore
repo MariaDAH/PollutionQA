@@ -6,7 +6,10 @@
 # vscode
 /bin
 /obj
-/vscode
+/.vscode
+appsettings.json
+appsettings.Development.json
+
 
 # User-specific files
 *.suo
@@ -333,3 +336,4 @@ ASALocalRun/
 
 # MFractors (Xamarin productivity tool) working folder 
 .mfractor/
+
